@@ -1,10 +1,18 @@
 package com.dszi.main;
 
+import java.awt.EventQueue;
+
+import com.dszi.gui.GridView;
+
 public class EntryPoint {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				new GridView();
+			}
+		});
 	}
 
 }
