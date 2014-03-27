@@ -11,6 +11,8 @@ import javax.swing.border.MatteBorder;
 public class TestPane extends JPanel {
 
 	private static final long serialVersionUID = -3216361759473038176L;
+	int counter = 0;
+	CellPanel cellPanel[] = new CellPanel[144];
 
 	public TestPane() {
 		setLayout(new GridBagLayout());
@@ -21,24 +23,15 @@ public class TestPane extends JPanel {
 				gbc.gridx = col;
 				gbc.gridy = row;
 
-				CellPane cellPane = new CellPane();
+				cellPanel[counter] = new CellPanel();
 				Border border = null;
-				if (row < 4) {
-					if (col < 4) {
-						border = new MatteBorder(1, 1, 0, 0, Color.GRAY);
-					} else {
-						border = new MatteBorder(1, 1, 0, 1, Color.GRAY);
-					}
-				} else {
-					if (col < 4) {
-						border = new MatteBorder(1, 1, 1, 0, Color.GRAY);
-					} else {
-						border = new MatteBorder(1, 1, 1, 1, Color.GRAY);
-					}
-				}
-				cellPane.setBorder(border);
-				add(cellPane, gbc);
+				border = new MatteBorder(1, 1, 1, 1, Color.GRAY);
+				cellPanel[counter].setBorder(border);
+				add(cellPanel[counter], gbc);
+				
+				counter++;
 			}
 		}
+		cellPanel[0].setTractorPositionHere();
 	}
 }
