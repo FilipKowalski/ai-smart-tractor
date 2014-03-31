@@ -36,6 +36,10 @@ public class SingleCell extends JPanel {
 	public void setTractorPositionHere() {
 		setBackground(Color.RED);
 	}
+
+	public void setTractorPositionNotHere() {
+		setBackground(Color.BLUE);
+	}
 	
 	public void setGroundParameters(String irrigation, String soilDesctruction, String numberOfPests) {
 		String toolTip = "Nawodnienie : " + irrigation + " " + 
