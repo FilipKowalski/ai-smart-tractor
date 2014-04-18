@@ -40,21 +40,14 @@ public class SingleCell extends JPanel {
 		setBackground(Color.RED);
 	}
 	
+	public void setTractorPositionWhenLeaving() {
+		setBackground(Color.BLUE);
+	}
+	
 	public void setGroundParameters(String irrigation, String soilDesctruction, String numberOfPests) {
-		String toolTip = "Nawodnienie : " + irrigation + " " + 
-						 "Zniszczenie gleby : " + soilDesctruction + " " +
-						 "Liczba szkodników : " + numberOfPests + " ";
-		
-		if(irrigation.length()==2) irrigation = irrigation.substring(0, 1);
-		if(irrigation.length()==3) irrigation = irrigation.substring(0, 2);
-		if(irrigation.length()==4) irrigation = irrigation.substring(0, 3);
-		if(soilDesctruction.length()==2) soilDesctruction = soilDesctruction.substring(0, 1);
-		if(soilDesctruction.length()==3) soilDesctruction = soilDesctruction.substring(0, 2);
-		if(soilDesctruction.length()==4) soilDesctruction = soilDesctruction.substring(0, 3);
-		if(numberOfPests.length()==2) numberOfPests = numberOfPests.substring(0, 1);
-		if(numberOfPests.length()==3) numberOfPests = numberOfPests.substring(0, 2);
-		if(numberOfPests.length()==4) numberOfPests = numberOfPests.substring(0, 3);
-		
+		String toolTip = "Nawodnienie : " + irrigation + "% | " + 
+						 "Zniszczenie gleby : " + soilDesctruction + "% | " +
+						 "Liczba szkodników : " + numberOfPests + " | ";
 		
 		
 		Irrigation = Integer.parseInt(irrigation);

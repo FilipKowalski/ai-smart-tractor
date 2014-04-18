@@ -24,8 +24,7 @@ public class DataEncapsule
     public char Mask(double arg1)
     {
         if (arg1 == -1) return ' ';
-        else 
-        if (arg1 == 1) return '*';
+        else if (arg1 == 1) return '*';
         else return '0';
     }
     
