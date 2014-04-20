@@ -44,6 +44,10 @@ public class SingleCell extends JPanel {
 		setBackground(Color.BLUE);
 	}
 	
+	public void setAlgoritmPositionHere() {
+		setBackground(Color.GREEN);
+	}
+	
 	public void setGroundParameters(String irrigation, String soilDesctruction, String numberOfPests) {
 		String toolTip = "Nawodnienie : " + irrigation + "% | " + 
 						 "Zniszczenie gleby : " + soilDesctruction + "% | " +

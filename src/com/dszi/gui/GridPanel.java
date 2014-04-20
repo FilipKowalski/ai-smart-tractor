@@ -3,19 +3,20 @@ package com.dszi.gui;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.Timer;
 
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
 
 import com.dszi.randomizer.RandomGroundGenerator;
+import com.dszi.stateMethod.DFS;
+import com.dszi.support.Constants;
 
 @SuppressWarnings("serial")
 public class GridPanel extends JPanel {
 
-	SingleCell cellPanel[] = new SingleCell[144];
-
+	SingleCell cellPanel[][] = new SingleCell[Constants.gridSizeX][Constants.gridSizeY];
+	
 	public GridPanel() {
 		initializeGridView();
 		initializeTractorPosition();
@@ -23,38 +24,39 @@ public class GridPanel extends JPanel {
 	}
 
 	private void initializeGridView() {
-		setLayout(new GridBagLayout());
+		Border border = null;
 		GridBagConstraints gbc = new GridBagConstraints();
-		int counter = 0;
-		for (int row = 0; row < 12; row++) {
-			for (int col = 0; col < 12; col++) {
+		setLayout(new GridBagLayout());
+
+		for (int row = 0; row < Constants.gridSizeX; row++) {
+			for (int col = 0; col < Constants.gridSizeY; col++) {
 				gbc.gridx = col;
 				gbc.gridy = row;
 
-				cellPanel[counter] = new SingleCell();
-				Border border = null;
+				cellPanel[row][col] = new SingleCell();
 				border = new MatteBorder(1, 1, 1, 1, Color.GRAY);
-				cellPanel[counter].setBorder(border);
-				add(cellPanel[counter], gbc);
-
-				counter++;
+				cellPanel[row][col].setBorder(border);
+				add(cellPanel[row][col], gbc);
 			}
 		}
 	}
 
 	private void initializeTractorPosition() {
-		cellPanel[0].setTractorPositionHere();
+		cellPanel[0][0].setTractorPositionHere();
 	}
 
-	private void initializeGeneratedData() {
-		for (int i = 0; i < 144; i++) {
-			cellPanel[i].setGroundParameters(RandomGroundGenerator.generateIrrigation(), 
-					RandomGroundGenerator.generateSoilDesctruction(), RandomGroundGenerator.generateNumberOfPests());
+	public void initializeGeneratedData() {
+		for (int i = 0; i < Constants.gridSizeX; i++) {
+			for (int j = 0; j < Constants.gridSizeY; j++) {
+				cellPanel[i][j].setGroundParameters(RandomGroundGenerator.generateIrrigation(), 
+						RandomGroundGenerator.generateSoilDesctruction(), RandomGroundGenerator.generateNumberOfPests());
+			}
 		}
 	}
 
 	public void startTractor() {
-		Timer timer = new Timer();
-		timer.schedule(new TractorMovement(cellPanel), 0, 1000);
+//		Timer timer = new Timer();
+//		timer.schedule(new TractorMovement(cellPanel), 0, 100);
+		DFS dfs = new DFS(cellPanel);
 	}
 }
