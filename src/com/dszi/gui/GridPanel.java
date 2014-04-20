@@ -9,14 +9,14 @@ import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
 
 import com.dszi.randomizer.RandomGroundGenerator;
-import com.dszi.stateMethod.DFS;
+import com.dszi.stateMethod.AAlgorithm;
 import com.dszi.support.Constants;
 
 @SuppressWarnings("serial")
 public class GridPanel extends JPanel {
 
 	SingleCell cellPanel[][] = new SingleCell[Constants.gridSizeX][Constants.gridSizeY];
-	
+
 	public GridPanel() {
 		initializeGridView();
 		initializeTractorPosition();
@@ -41,6 +41,12 @@ public class GridPanel extends JPanel {
 		}
 	}
 
+	public void clearGridView() {
+		for (int row = 0; row < Constants.gridSizeX; row++) 
+			for (int col = 0; col < Constants.gridSizeY; col++) 
+				cellPanel[row][col].setClearCellHere();
+	}
+
 	private void initializeTractorPosition() {
 		cellPanel[0][0].setTractorPositionHere();
 	}
@@ -48,15 +54,17 @@ public class GridPanel extends JPanel {
 	public void initializeGeneratedData() {
 		for (int i = 0; i < Constants.gridSizeX; i++) {
 			for (int j = 0; j < Constants.gridSizeY; j++) {
-				cellPanel[i][j].setGroundParameters(RandomGroundGenerator.generateIrrigation(), 
-						RandomGroundGenerator.generateSoilDesctruction(), RandomGroundGenerator.generateNumberOfPests());
+				cellPanel[i][j].setIrrigation(RandomGroundGenerator.generateIrrigation());
+				cellPanel[i][j].setSoilDestruction(RandomGroundGenerator.generateSoilDesctruction());
+				cellPanel[i][j].setNumberofPests(RandomGroundGenerator.generateNumberOfPests());
+				cellPanel[i][j].refreshGroundParameters();
 			}
 		}
 	}
 
 	public void startTractor() {
-//		Timer timer = new Timer();
-//		timer.schedule(new TractorMovement(cellPanel), 0, 100);
-		DFS dfs = new DFS(cellPanel);
+		//		Timer timer = new Timer();
+		//		timer.schedule(new TractorMovement(cellPanel), 0, 100);
+		AAlgorithm dfs = new AAlgorithm(cellPanel);
 	}
 }

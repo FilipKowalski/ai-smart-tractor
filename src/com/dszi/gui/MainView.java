@@ -31,14 +31,15 @@ public class MainView {
 	 */
 
 	GridPanel gridPanel = new GridPanel();
+	static Tractor tractor = new Tractor();
 
-	JLabel tractorStateLabel = new JLabel("-- Stan traktora -- ");
+	JLabel tractorStateLabel = new JLabel("-- Stan pocz¹tkowy traktora -- ");
 	JLabel waterLevelLabel = new JLabel("Poziom wody : ");
-	public static JLabel waterLevel = new JLabel("0");
+	public static JLabel waterLevel = new JLabel(Integer.toString(tractor.getWaterLevel()));
 	JLabel pesticideLevelLabel = new JLabel("Poziom pestycydów : ");
-	public static JLabel pesticideLevel = new JLabel("0");
+	public static JLabel pesticideLevel = new JLabel(Integer.toString(tractor.getPesticideLevel()));
 	JLabel fertilizerLevelLabel = new JLabel("Poziom nawozu : ");
-	public static JLabel fertilizerLevel = new JLabel("0");
+	public static JLabel fertilizerLevel = new JLabel(Integer.toString(tractor.getFertilizerLevel()));
 
 	JButton generate = new JButton("Generuj");
 	JButton moveTractor = new JButton("Ruszaj");
@@ -92,13 +93,11 @@ public class MainView {
 				frame.add(fertilizerLevel, "cell 0 3");
 
 				frame.add(generate, "cell 0 4");
-				frame.add(runTractor, "cell 0 5");
-				frame.add(moveTractor, "cell 0 6, wrap");
+				frame.add(moveTractor, "cell 0 5, wrap");
 				frame.add(gridPanel, "east");
 				frame.pack();
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
-
 			}
 		});
 	}
@@ -108,6 +107,7 @@ public class MainView {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				gridPanel.clearGridView();
 				gridPanel.initializeGeneratedData();
 			}
 		});
@@ -118,16 +118,5 @@ public class MainView {
 				gridPanel.startTractor();
 			}
 		});
-		
-		runTractor.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Tractor tractor = new Tractor();
-				waterLevel.setText(Integer.toString(tractor.getWaterLevel()));
-				pesticideLevel.setText(Integer.toString(tractor.getPesticideLevel()));
-				fertilizerLevel.setText(Integer.toString(tractor.getFertilizerLevel()));
-			}
-		}); 
 	}
 }
