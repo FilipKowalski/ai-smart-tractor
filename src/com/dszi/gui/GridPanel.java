@@ -9,7 +9,7 @@ import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
 
 import com.dszi.randomizer.RandomGroundGenerator;
-import com.dszi.stateMethod.AAlgorithm;
+import com.dszi.stateSpace.AAlgorithm;
 import com.dszi.support.Constants;
 
 @SuppressWarnings("serial")

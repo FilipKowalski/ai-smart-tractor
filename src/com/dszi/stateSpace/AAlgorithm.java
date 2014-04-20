@@ -1,5 +1,6 @@
-package com.dszi.stateMethod;
+package com.dszi.stateSpace;
 
+import com.dszi.firstorderlogic.Properties;
 import com.dszi.gui.SingleCell;
 import com.dszi.support.Constants;
 import com.dszi.tractor.Tractor;
@@ -81,6 +82,9 @@ public class AAlgorithm {
 	private boolean newIsBetter(int oldX, int oldY, int newX, int newY) {
 		int pointsForOld = 0;
 		int pointsForNew = 0;
+		if (Properties.IsinPerfectCondidion(cellPanel[oldX][oldY])) {
+			pointsForNew++;
+		}
 		if (cellPanel[oldX][oldY].getIrrigation() >= cellPanel[newX][newY].getIrrigation()) 
 			pointsForNew++;
 		else pointsForOld++;
