@@ -76,36 +76,44 @@ public class TreeAlgorithm {
 			}
 		}
 		if(!visited[oldX][oldY])
+		{
 			dfs(oldX, oldY);
+		}
+		else {
+			dfs(oldX + 1, oldY - 1);
+		}
 	}
 
 	private boolean repairMostDamaged(int oldX, int oldY, int newX, int newY) {
-		int pointsForOld = 0;
-		int pointsForNew = 0;
+		int chooseOld = 0;
+		int chooseNew = 0;
 
 		if (Properties.IsinPerfectCondidion(cellPanel[newX][newY])) {
-			pointsForOld = 1;
+			chooseOld = 1;
 		}
 		else {
 			if (Properties.IsDead(cellPanel[newX][newY])) {
-				pointsForNew = 1;
+				chooseNew = 1;
 			} else {
 				if (cellPanel[oldX][oldY].getIrrigation() <= cellPanel[newX][newY].getIrrigation()) {
-					pointsForOld = 1;
+					chooseOld = 1;
 				}
 				else {
-					if (cellPanel[oldX][oldY].getNumberOfPests() >= cellPanel[newX][newY].getNumberOfPests()) {
-						pointsForOld = 1;
+					if (cellPanel[oldX][oldY].getNumberOfPests() >= 2*(cellPanel[newX][newY].getNumberOfPests())) {
+						chooseOld = 1;
 					}
 					else {
-						if (cellPanel[oldX][oldY].getSoilDestruction() >= cellPanel[newX][newY].getSoilDestruction()) 
-							pointsForOld = 1;
-						else pointsForNew = 1;
+						if (cellPanel[oldX][oldY].getSoilDestruction() >= 2*(cellPanel[newX][newY].getSoilDestruction())) {
+							chooseOld = 1;
+						}
+						else { 
+							chooseNew = 1;
+						}
 					}
 				}
 			}
 		}
-		if(pointsForOld >= pointsForNew) 
+		if(chooseOld >= chooseNew) 
 			return false;
 		else return true;
 	}
@@ -124,6 +132,7 @@ public class TreeAlgorithm {
 	}
 
 	private void updateCell(int x, int y) {
+
 		cellPanel[x][y].setIrrigation(100);
 		cellPanel[x][y].setNumberofPests(0);
 		cellPanel[x][y].setSoilDestruction(0);
