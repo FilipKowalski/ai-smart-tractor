@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
 
+import com.dszi.decision_tree.TreeAlgorithm;
 import com.dszi.randomizer.RandomGroundGenerator;
 import com.dszi.stateSpace.AAlgorithm;
 import com.dszi.support.Constants;
@@ -66,5 +67,11 @@ public class GridPanel extends JPanel {
 		//		Timer timer = new Timer();
 		//		timer.schedule(new TractorMovement(cellPanel), 0, 100);
 		AAlgorithm dfs = new AAlgorithm(cellPanel);
+	}
+	
+	public void startTreeTractor() {
+		//		Timer timer = new Timer();
+		//		timer.schedule(new TractorMovement(cellPanel), 0, 100);
+		TreeAlgorithm dfs = new TreeAlgorithm(cellPanel);
 	}
 }

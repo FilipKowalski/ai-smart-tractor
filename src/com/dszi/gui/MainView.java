@@ -20,6 +20,7 @@ import javax.swing.table.TableModel;
 
 import net.miginfocom.swing.MigLayout;
 
+import com.dszi.decision_tree.TreeAlgorithm;
 import com.dszi.tractor.Tractor;
 
 
@@ -42,8 +43,9 @@ public class MainView {
 	public static JLabel fertilizerLevel = new JLabel(Integer.toString(tractor.getFertilizerLevel()));
 
 	JButton generate = new JButton("Generuj");
-	JButton moveTractor = new JButton("Ruszaj");
+	JButton uruchomA = new JButton("Uruchom A*");
 	JButton runTractor = new JButton("Uruchom traktor");
+	JButton treeButton = new JButton("Drzewo");
 
 	public MainView() {
 		EventQueue.invokeLater(new Runnable() {
@@ -93,7 +95,8 @@ public class MainView {
 				frame.add(fertilizerLevel, "cell 0 3");
 
 				frame.add(generate, "cell 0 4");
-				frame.add(moveTractor, "cell 0 5, wrap");
+				frame.add(uruchomA, "cell 0 5, wrap");
+				frame.add(treeButton, "cell 0 6, wrap");
 				frame.add(gridPanel, "east");
 				frame.pack();
 				frame.setLocationRelativeTo(null);
@@ -111,11 +114,18 @@ public class MainView {
 				gridPanel.initializeGeneratedData();
 			}
 		});
-		moveTractor.addActionListener(new ActionListener() {
+		uruchomA.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				gridPanel.startTractor();
+			}
+		});
+		treeButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				gridPanel.startTreeTractor();
 			}
 		});
 	}
