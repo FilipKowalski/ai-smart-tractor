@@ -43,12 +43,9 @@ public class MainView {
 	public static JLabel fertilizerLevel = new JLabel(Integer.toString(tractor.getFertilizerLevel()));
 
 	JButton generate = new JButton("Generuj");
-<<<<<<< HEAD
 	JButton moveTractor = new JButton("Ruszaj");
 	JButton genetic = new JButton("Selekcja");
-=======
 	JButton uruchomA = new JButton("Uruchom A*");
->>>>>>> fd8e8e26dd012c6d0e6c008855d5fa1d6fe46f02
 	JButton runTractor = new JButton("Uruchom traktor");
 	JButton treeButton = new JButton("Drzewo");
 
@@ -106,13 +103,10 @@ public class MainView {
 				frame.add(fertilizerLevel, "cell 0 3");
 
 				frame.add(generate, "cell 0 4");
-<<<<<<< HEAD
 				frame.add(moveTractor, "cell 0 5, wrap");
 				frame.add(genetic, "cell 0 6, wrap");
-=======
 				frame.add(uruchomA, "cell 0 5, wrap");
 				frame.add(treeButton, "cell 0 6, wrap");
->>>>>>> fd8e8e26dd012c6d0e6c008855d5fa1d6fe46f02
 				frame.add(gridPanel, "east");
 				frame.pack();
 				frame.setLocationRelativeTo(null);
@@ -120,6 +114,7 @@ public class MainView {
 			}
 		});
 	}
+	
 
 	private void initializeListeners() {
 		generate.addActionListener(new ActionListener() {
@@ -137,19 +132,18 @@ public class MainView {
 				gridPanel.startTractor();
 			}
 		});
-<<<<<<< HEAD
 		genetic.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				gridPanel.Genetic();
-=======
+			}
+		});
 		treeButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				gridPanel.startTreeTractor();
->>>>>>> fd8e8e26dd012c6d0e6c008855d5fa1d6fe46f02
 			}
 		});
 	}

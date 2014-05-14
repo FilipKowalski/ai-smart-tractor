@@ -70,14 +70,13 @@ public class GridPanel extends JPanel {
 		AAlgorithm dfs = new AAlgorithm(cellPanel);
 	}
 	
-<<<<<<< HEAD
+
 	public void Genetic() {
 		geneticAlgorithm abc = new geneticAlgorithm(cellPanel);
-=======
+	}
 	public void startTreeTractor() {
 		//		Timer timer = new Timer();
 		//		timer.schedule(new TractorMovement(cellPanel), 0, 100);
 		TreeAlgorithm dfs = new TreeAlgorithm(cellPanel);
->>>>>>> fd8e8e26dd012c6d0e6c008855d5fa1d6fe46f02
 	}
 }
