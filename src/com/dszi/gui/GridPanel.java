@@ -11,6 +11,7 @@ import javax.swing.border.MatteBorder;
 import com.dszi.randomizer.RandomGroundGenerator;
 import com.dszi.stateSpace.AAlgorithm;
 import com.dszi.support.Constants;
+import com.dszi.geneticAlgorithm.geneticAlgorithm;
 
 @SuppressWarnings("serial")
 public class GridPanel extends JPanel {
@@ -66,5 +67,9 @@ public class GridPanel extends JPanel {
 		//		Timer timer = new Timer();
 		//		timer.schedule(new TractorMovement(cellPanel), 0, 100);
 		AAlgorithm dfs = new AAlgorithm(cellPanel);
+	}
+	
+	public void Genetic() {
+		geneticAlgorithm abc = new geneticAlgorithm(cellPanel);
 	}
 }

@@ -33,16 +33,17 @@ public class MainView {
 	GridPanel gridPanel = new GridPanel();
 	static Tractor tractor = new Tractor();
 
-	JLabel tractorStateLabel = new JLabel("-- Stan pocz¹tkowy traktora -- ");
+	JLabel tractorStateLabel = new JLabel("-- Stan poczï¿½tkowy traktora -- ");
 	JLabel waterLevelLabel = new JLabel("Poziom wody : ");
 	public static JLabel waterLevel = new JLabel(Integer.toString(tractor.getWaterLevel()));
-	JLabel pesticideLevelLabel = new JLabel("Poziom pestycydów : ");
+	JLabel pesticideLevelLabel = new JLabel("Poziom pestycydï¿½w : ");
 	public static JLabel pesticideLevel = new JLabel(Integer.toString(tractor.getPesticideLevel()));
 	JLabel fertilizerLevelLabel = new JLabel("Poziom nawozu : ");
 	public static JLabel fertilizerLevel = new JLabel(Integer.toString(tractor.getFertilizerLevel()));
 
 	JButton generate = new JButton("Generuj");
 	JButton moveTractor = new JButton("Ruszaj");
+	JButton genetic = new JButton("Selekcja");
 	JButton runTractor = new JButton("Uruchom traktor");
 
 	public MainView() {
@@ -51,7 +52,13 @@ public class MainView {
 			public void run() {
 				try {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+				} catch (ClassNotFoundException ex) {
+				} catch (InstantiationException e2) {
+	
+				} catch ( IllegalAccessException e3) {
+					
+				} catch ( UnsupportedLookAndFeelException e4) {
+					
 				}
 				
 				initializeListeners();
@@ -94,6 +101,7 @@ public class MainView {
 
 				frame.add(generate, "cell 0 4");
 				frame.add(moveTractor, "cell 0 5, wrap");
+				frame.add(genetic, "cell 0 6, wrap");
 				frame.add(gridPanel, "east");
 				frame.pack();
 				frame.setLocationRelativeTo(null);
@@ -116,6 +124,13 @@ public class MainView {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				gridPanel.startTractor();
+			}
+		});
+		genetic.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				gridPanel.Genetic();
 			}
 		});
 	}

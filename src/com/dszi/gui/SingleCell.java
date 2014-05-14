@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import com.dszi.firstorderlogic.Properties;
+import com.dszi.logikaklauzul.*;
 
 import javax.swing.JPanel;
 
@@ -13,6 +15,7 @@ public class SingleCell extends JPanel {
 	private static final long serialVersionUID = 5121081628171676849L;
 	private Color defaultBackground;
 	Properties Props = new Properties();
+	LogicProperties p = new LogicProperties();
 	
 	int irrigation, soilDestruction, numberOfPests;
 
@@ -38,15 +41,17 @@ public class SingleCell extends JPanel {
 	public void refreshGroundParameters() {
 		String toolTip = "<html>Nawodnienie : " + getIrrigation() + "% | " + 
 						 "Zniszczenie gleby : " + getSoilDestruction() + "% | " +
-						 "Liczba szkodników : " + getNumberOfPests() + " <br>";
+						 "Liczba szkodnikï¿½w : " + getNumberOfPests() + " <br>";
 		
 		toolTip = toolTip + 
 				 "Czy wymaga podlania: " + Props.NeedsWatering(this) + "<br>" +
-				 "Czy wymaga nawo¿enia: " + Props.NeedsFertilising(this) + "<br>" +
-				 "Czy ma insekty: " + Props.SomePestsPresent(this) + "</html>" //+
+				 "Czy wymaga nawoï¿½enia: " + Props.NeedsFertilising(this) + "<br>" +
+				 "Czy ma insekty: " + Props.SomePestsPresent(this) + "<br>" +
+				 "Czy moÅ¼e zostaÄ‡ wykluczona: " + p.GeneticAlgorithmMayRefuseThisCell(this) + "<br>" +
+				 "Czy jest wykluczona/nie potrzebne naprawy: " + p.TooGoodForGenetic(this) + "</html>" //+
 				 /*"DEV: Nawodnienie jako substring " + irrigation + " " +
 				 "DEV: Nawodnienie jako liczba " + Irrigation + " " +
-				 "DEV: U¿yŸnienie jako liczba " + soilDestruction + " " +
+				 "DEV: Uï¿½yï¿½nienie jako liczba " + soilDestruction + " " +
 				 "DEV: Insekty jako liczba " + numberofPests + " "*/;
 		
 		setToolTipText(toolTip);

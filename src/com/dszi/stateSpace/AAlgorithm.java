@@ -25,6 +25,14 @@ public class AAlgorithm {
 		initializeTractor();
 		dfs(0, 0);
 	}
+	
+	public AAlgorithm(SingleCell[][] cellPanel, boolean[][] visited) {
+		this.cellPanel = cellPanel;
+		this.visited = visited;
+		
+		initializeTractor();
+		dfs(0, 0);
+	}
 
 	public void dfs(int x, int y) {
 		if(hasSupplies()) {
@@ -140,10 +148,10 @@ public class AAlgorithm {
 		System.out.println("-----------------------");
 		System.out.println("Sprawdzanie stanu pierwszej pozycji ");
 		System.out.println("Aktualna pozycja : " + positionX + " " + positionY);
-		System.out.println("Pozosta³e zasoby traktora : ");
+		System.out.println("Pozostaï¿½e zasoby traktora : ");
 		System.out.println("Woda " + waterLevel);
 		System.out.println("Pestycydy " + pesticideLevel);
-		System.out.println("Nawóz " + fertilizerLevel);
+		System.out.println("Nawï¿½z " + fertilizerLevel);
 	}
 
 	private boolean isNotOutOfBounds(int x, int y) {
