@@ -1,14 +1,20 @@
 package com.dszi.stateSpace;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.dszi.firstorderlogic.Properties;
 import com.dszi.gui.SingleCell;
 import com.dszi.support.Constants;
 import com.dszi.tractor.Tractor;
+import com.dszi.utils.Point;
+
 
 public class AAlgorithm {
 
 	Tractor tractor = new Tractor();
 	SingleCell cellPanel[][] = new SingleCell[Constants.gridSizeX][Constants.gridSizeY];
+	List<Point> pointsList = new ArrayList<Point>();
 
 	boolean[][] visited = new boolean[Constants.gridSizeX + 1][Constants.gridSizeY + 1]; 
 	boolean hasToFinish = false;
@@ -18,7 +24,7 @@ public class AAlgorithm {
 	int waterLevel;
 	int pesticideLevel;
 	int fertilizerLevel;
-
+	
 	public AAlgorithm(SingleCell[][] cellPanel) {
 		this.cellPanel = cellPanel;
 
@@ -117,8 +123,9 @@ public class AAlgorithm {
 		pesticideLevel = pesticideLevel - cellPanel[x][y].getNumberOfPests();
 		fertilizerLevel = fertilizerLevel - cellPanel[x][y].getSoilDestruction();
 		visited[x][y] = true;
-		cellPanel[x][y].setAlgoritmPositionHere();
-
+		
+		pointsList.add(new Point(x, y));
+		
 		updateCell(x, y);
 		showResources();
 	}
@@ -148,15 +155,19 @@ public class AAlgorithm {
 		System.out.println("-----------------------");
 		System.out.println("Sprawdzanie stanu pierwszej pozycji ");
 		System.out.println("Aktualna pozycja : " + positionX + " " + positionY);
-		System.out.println("Pozostaï¿½e zasoby traktora : ");
+		System.out.println("Pozosta³e zasoby traktora : ");
 		System.out.println("Woda " + waterLevel);
 		System.out.println("Pestycydy " + pesticideLevel);
-		System.out.println("Nawï¿½z " + fertilizerLevel);
+		System.out.println("Nawóz " + fertilizerLevel);
 	}
 
 	private boolean isNotOutOfBounds(int x, int y) {
 		if(x >= 0 && y >= 0 && x < Constants.gridSizeX && y < Constants.gridSizeY)
 			return true;
 		return false;
+	}
+	
+	public List<Point> getPointsList() {
+		return pointsList;
 	}
 }

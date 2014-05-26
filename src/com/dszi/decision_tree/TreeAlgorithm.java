@@ -1,14 +1,19 @@
 package com.dszi.decision_tree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.dszi.firstorderlogic.Properties;
 import com.dszi.gui.SingleCell;
 import com.dszi.support.Constants;
 import com.dszi.tractor.Tractor;
+import com.dszi.utils.Point;
 
 public class TreeAlgorithm {
 
 	Tractor tractor = new Tractor();
 	SingleCell cellPanel[][] = new SingleCell[Constants.gridSizeX][Constants.gridSizeY];
+	List<Point> pointsList = new ArrayList<Point>();
 
 	boolean[][] visited = new boolean[Constants.gridSizeX + 1][Constants.gridSizeY + 1]; 
 	boolean hasToFinish = false;
@@ -125,14 +130,14 @@ public class TreeAlgorithm {
 		pesticideLevel = pesticideLevel - cellPanel[x][y].getNumberOfPests();
 		fertilizerLevel = fertilizerLevel - cellPanel[x][y].getSoilDestruction();
 		visited[x][y] = true;
-		cellPanel[x][y].setAlgoritmPositionHere();
 
+		pointsList.add(new Point(x, y));
+		
 		updateCell(x, y);
 		showResources();
 	}
 
 	private void updateCell(int x, int y) {
-
 		cellPanel[x][y].setIrrigation(100);
 		cellPanel[x][y].setNumberofPests(0);
 		cellPanel[x][y].setSoilDestruction(0);
@@ -168,6 +173,8 @@ public class TreeAlgorithm {
 			return true;
 		return false;
 	}
-
-
+	
+	public List<Point> getPointsList() {
+		return pointsList;
+	}
 }

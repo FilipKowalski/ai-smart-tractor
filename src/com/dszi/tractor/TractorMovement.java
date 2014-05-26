@@ -1,27 +1,41 @@
 package com.dszi.tractor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TimerTask;
 
 import com.dszi.gui.SingleCell;
 import com.dszi.support.Constants;
+import com.dszi.utils.Point;
 
 public class TractorMovement extends TimerTask {
 
 	SingleCell cellPanel[][] = new SingleCell[Constants.gridSizeX][Constants.gridSizeY];
-	int positionX = 1;
-	int positionY = 1;
+	List<Point> pointsList = new ArrayList<Point>();
 
-	public TractorMovement(SingleCell cellPanel[][]) {
+	int listCount = 0;
+
+	public TractorMovement(SingleCell cellPanel[][], List<Point> pointsList) {
 		this.cellPanel = cellPanel;
+		this.pointsList = pointsList;
 	}
 
 	public void run() {
-		setTractorPosition(positionX, positionY);
+		setTractorPosition();
 	}
 
-	private void setTractorPosition(int x, int y) {
-		cellPanel[x - 1][y].setTractorPositionWhenLeaving();
-		cellPanel[x][y].setTractorPositionHere();
-		positionX++;
+	private void setTractorPosition() {
+		if (pointsList.size() > listCount) { 
+			int x = pointsList.get(listCount).getX();
+			int y = pointsList.get(listCount).getY();
+			
+			cellPanel[x][y].setAlgoritmPositionHere();
+			cellPanel[x][y].removeAll();
+			
+			if (listCount > 0) {
+				cellPanel[pointsList.get(listCount - 1).getX()][pointsList.get(listCount - 1).getY()].setTractorPositionWhenLeaving();
+			}
+		}
+		listCount++;
 	}
 }

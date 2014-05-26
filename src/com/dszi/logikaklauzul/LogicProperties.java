@@ -1,7 +1,6 @@
 package com.dszi.logikaklauzul;
 
 import com.dszi.gui.SingleCell;
-import com.dszi.support.Constants;
 
 public class LogicProperties {
 	public static boolean TooGoodForGenetic(SingleCell s) {

@@ -1,6 +1,5 @@
 package com.dszi.gui;
 
-
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,34 +19,26 @@ import javax.swing.table.TableModel;
 
 import net.miginfocom.swing.MigLayout;
 
-import com.dszi.decision_tree.TreeAlgorithm;
 import com.dszi.tractor.Tractor;
 
 
 public class MainView {
 
-	/*
-	 * UWAGA
-	 * tutorial dla layoutu ktory zostal uzyty http://www.miglayout.com/QuickStart.pdf
-	 */
-
 	GridPanel gridPanel = new GridPanel();
 	static Tractor tractor = new Tractor();
 
-	JLabel tractorStateLabel = new JLabel("-- Stan poczï¿½tkowy traktora -- ");
+	JLabel tractorStateLabel = new JLabel("-- Stan pocz¹tkowy traktora -- ");
 	JLabel waterLevelLabel = new JLabel("Poziom wody : ");
 	public static JLabel waterLevel = new JLabel(Integer.toString(tractor.getWaterLevel()));
-	JLabel pesticideLevelLabel = new JLabel("Poziom pestycydï¿½w : ");
+	JLabel pesticideLevelLabel = new JLabel("Poziom pestycydów : ");
 	public static JLabel pesticideLevel = new JLabel(Integer.toString(tractor.getPesticideLevel()));
 	JLabel fertilizerLevelLabel = new JLabel("Poziom nawozu : ");
 	public static JLabel fertilizerLevel = new JLabel(Integer.toString(tractor.getFertilizerLevel()));
 
-	JButton generate = new JButton("Generuj");
 	JButton moveTractor = new JButton("Ruszaj");
 	JButton genetic = new JButton("Selekcja");
-	JButton uruchomA = new JButton("Uruchom A*");
-	JButton runTractor = new JButton("Uruchom traktor");
-	JButton treeButton = new JButton("Drzewo");
+	JButton uruchomA = new JButton("Generuj A*");
+	JButton treeButton = new JButton("Generuj drzewo");
 
 	public MainView() {
 		EventQueue.invokeLater(new Runnable() {
@@ -57,11 +48,8 @@ public class MainView {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 				} catch (ClassNotFoundException ex) {
 				} catch (InstantiationException e2) {
-	
 				} catch ( IllegalAccessException e3) {
-					
 				} catch ( UnsupportedLookAndFeelException e4) {
-					
 				}
 				
 				initializeListeners();
@@ -102,11 +90,10 @@ public class MainView {
 				frame.add(fertilizerLevelLabel, "cell 0 3");
 				frame.add(fertilizerLevel, "cell 0 3");
 
-				frame.add(generate, "cell 0 4");
-				frame.add(moveTractor, "cell 0 5, wrap");
-				frame.add(genetic, "cell 0 6, wrap");
-				frame.add(uruchomA, "cell 0 5, wrap");
-				frame.add(treeButton, "cell 0 6, wrap");
+				frame.add(genetic, "cell 0 5, wrap");
+				frame.add(uruchomA, "cell 0 6, wrap");
+				frame.add(treeButton, "cell 0 7, wrap");
+				frame.add(moveTractor, "cell 0 8, wrap");
 				frame.add(gridPanel, "east");
 				frame.pack();
 				frame.setLocationRelativeTo(null);
@@ -117,25 +104,27 @@ public class MainView {
 	
 
 	private void initializeListeners() {
-		generate.addActionListener(new ActionListener() {
+		moveTractor.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				gridPanel.clearGridView();
-				gridPanel.initializeGeneratedData();
+				gridPanel.startTractor();
 			}
 		});
 		uruchomA.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				gridPanel.startTractor();
+				gridPanel.clearGridView();
+				gridPanel.generateAAPath();
 			}
 		});
 		genetic.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				gridPanel.clearGridView();
 				gridPanel.Genetic();
 			}
 		});
@@ -143,6 +132,7 @@ public class MainView {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				gridPanel.clearGridView();
 				gridPanel.startTreeTractor();
 			}
 		});

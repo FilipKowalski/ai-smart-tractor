@@ -5,17 +5,15 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import com.dszi.firstorderlogic.Properties;
-import com.dszi.logikaklauzul.*;
-
 import javax.swing.JPanel;
+
+import com.dszi.firstorderlogic.Properties;
+import com.dszi.logikaklauzul.LogicProperties;
 
 public class SingleCell extends JPanel {
 
 	private static final long serialVersionUID = 5121081628171676849L;
 	private Color defaultBackground;
-	Properties Props = new Properties();
-	LogicProperties p = new LogicProperties();
 	
 	int irrigation, soilDestruction, numberOfPests;
 
@@ -28,7 +26,7 @@ public class SingleCell extends JPanel {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				defaultBackground = getBackground();
-				setBackground(Color.BLUE);
+				setBackground(new Color(100, 220, 100));
 			}
 			
 			@Override
@@ -41,18 +39,14 @@ public class SingleCell extends JPanel {
 	public void refreshGroundParameters() {
 		String toolTip = "<html>Nawodnienie : " + getIrrigation() + "% | " + 
 						 "Zniszczenie gleby : " + getSoilDestruction() + "% | " +
-						 "Liczba szkodnikï¿½w : " + getNumberOfPests() + " <br>";
+						 "Liczba szkodników : " + getNumberOfPests() + " <br>";
 		
 		toolTip = toolTip + 
-				 "Czy wymaga podlania: " + Props.NeedsWatering(this) + "<br>" +
-				 "Czy wymaga nawoï¿½enia: " + Props.NeedsFertilising(this) + "<br>" +
-				 "Czy ma insekty: " + Props.SomePestsPresent(this) + "<br>" +
-				 "Czy moÅ¼e zostaÄ‡ wykluczona: " + p.GeneticAlgorithmMayRefuseThisCell(this) + "<br>" +
-				 "Czy jest wykluczona/nie potrzebne naprawy: " + p.TooGoodForGenetic(this) + "</html>" //+
-				 /*"DEV: Nawodnienie jako substring " + irrigation + " " +
-				 "DEV: Nawodnienie jako liczba " + Irrigation + " " +
-				 "DEV: Uï¿½yï¿½nienie jako liczba " + soilDestruction + " " +
-				 "DEV: Insekty jako liczba " + numberofPests + " "*/;
+				 "Czy wymaga podlania: " + Properties.NeedsWatering(this) + "<br>" +
+				 "Czy wymaga nawo¿enia: " + Properties.NeedsFertilising(this) + "<br>" +
+				 "Czy ma insekty: " + Properties.SomePestsPresent(this) + "<br>" +
+				 "Czy mo¿e zostaæ wykluczona: " + LogicProperties.GeneticAlgorithmMayRefuseThisCell(this) + "<br>" +
+				 "Czy jest wykluczona/nie potrzebne naprawy: " + LogicProperties.TooGoodForGenetic(this) + "</html>";
 		
 		setToolTipText(toolTip);
 	}
@@ -82,11 +76,11 @@ public class SingleCell extends JPanel {
 	}
 
 	public void setTractorPositionHere() {
-		setBackground(Color.RED);
+		setBackground(new Color(150, 25, 100));
 	}
 	
 	public void setTractorPositionWhenLeaving() {
-		setBackground(Color.BLUE);
+		setBackground(new Color(70, 25, 5));
 	}
 	
 	public void setClearCellHere() {
@@ -94,11 +88,11 @@ public class SingleCell extends JPanel {
 	}
 	
 	public void setAlgoritmPositionHere() {
-		setBackground(Color.GREEN);
+		setBackground(new Color(120, 165, 100));
 	}
 	
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension(50, 50);
+		return new Dimension(65, 65);
 	}
 }
