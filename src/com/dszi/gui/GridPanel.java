@@ -24,7 +24,9 @@ import com.dszi.utils.Point;
 public class GridPanel extends JPanel {
 
 	SingleCell cellPanel[][] = new SingleCell[Constants.gridSizeX][Constants.gridSizeY];
-	List<Point> pointsList = new ArrayList<Point>();
+	List<Point> aPointsList = new ArrayList<Point>();
+	List<Point> treePointsList = new ArrayList<Point>();
+	List<Point> geneticPointsList = new ArrayList<Point>();
 
 	public GridPanel() {
 		initializeGridView();
@@ -74,14 +76,24 @@ public class GridPanel extends JPanel {
 				cellPanel[row][col].setClearCellHere();
 	}
 
-	public void startTractor() {
+	public void startATractor() {
 		Timer timer = new Timer();
-		timer.schedule(new TractorMovement(cellPanel, pointsList), 0, 150);
+		timer.schedule(new TractorMovement(cellPanel, aPointsList), 0, 150);
+	}
+	
+	public void startTreeTractor() {
+		Timer timer = new Timer();
+		timer.schedule(new TractorMovement(cellPanel, treePointsList), 0, 150);
+	}
+	
+	public void startGeneticTractor() {
+		Timer timer = new Timer();
+		timer.schedule(new TractorMovement(cellPanel, geneticPointsList), 0, 150);
 	}
 	
 	public void generateAAPath() {
 		AAlgorithm aa = new AAlgorithm(cellPanel);
-		pointsList = aa.getPointsList();
+		aPointsList = aa.getPointsList();
 		
 		System.out.println("=========================");
 		System.out.println("WYGENEROWANO ŒCIE¯KÊ ZA POMOC¥ ALGORYTMU A*");
@@ -92,9 +104,9 @@ public class GridPanel extends JPanel {
 		geneticAlgorithm abc = new geneticAlgorithm(cellPanel);
 	}
 	
-	public void startTreeTractor() {
+	public void generateTree() {
 		TreeAlgorithm tree = new TreeAlgorithm(cellPanel);
-		pointsList = tree.getPointsList();
+		treePointsList = tree.getPointsList();
 		
 		System.out.println("=========================");
 		System.out.println("WYGENEROWANO ŒCIE¯KÊ ZA POMOC¥ DRZEWA DECYZYJNEGO");

@@ -35,10 +35,12 @@ public class MainView {
 	JLabel fertilizerLevelLabel = new JLabel("Poziom nawozu : ");
 	public static JLabel fertilizerLevel = new JLabel(Integer.toString(tractor.getFertilizerLevel()));
 
-	JButton moveTractor = new JButton("Ruszaj");
-	JButton genetic = new JButton("Selekcja");
-	JButton uruchomA = new JButton("Generuj A*");
-	JButton treeButton = new JButton("Generuj drzewo");
+	JButton generujGenetic = new JButton("Selekcja");
+	JButton moveGeneticTractor = new JButton("Go");
+	JButton generujA = new JButton("Generuj A*");
+	JButton moveATractor = new JButton("Go");
+	JButton generujTree = new JButton("Generuj drzewo");
+	JButton moveTreeTractor = new JButton("Go");
 
 	public MainView() {
 		EventQueue.invokeLater(new Runnable() {
@@ -90,10 +92,12 @@ public class MainView {
 				frame.add(fertilizerLevelLabel, "cell 0 3");
 				frame.add(fertilizerLevel, "cell 0 3");
 
-				frame.add(genetic, "cell 0 5, wrap");
-				frame.add(uruchomA, "cell 0 6, wrap");
-				frame.add(treeButton, "cell 0 7, wrap");
-				frame.add(moveTractor, "cell 0 8, wrap");
+				frame.add(generujGenetic, "cell 0 5, wrap");
+				frame.add(moveGeneticTractor, "cell 1 5, wrap");
+				frame.add(generujA, "cell 0 6, wrap");
+				frame.add(moveATractor, "cell 1 6, wrap");
+				frame.add(generujTree, "cell 0 7, wrap");
+				frame.add(moveTreeTractor, "cell 1 7, wrap");
 				frame.add(gridPanel, "east");
 				frame.pack();
 				frame.setLocationRelativeTo(null);
@@ -104,15 +108,7 @@ public class MainView {
 	
 
 	private void initializeListeners() {
-		moveTractor.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				gridPanel.clearGridView();
-				gridPanel.startTractor();
-			}
-		});
-		uruchomA.addActionListener(new ActionListener() {
+		generujA.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -120,7 +116,16 @@ public class MainView {
 				gridPanel.generateAAPath();
 			}
 		});
-		genetic.addActionListener(new ActionListener() {
+		moveATractor.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				gridPanel.clearGridView();
+				gridPanel.startATractor();
+			}
+		});
+		
+		generujGenetic.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -128,7 +133,24 @@ public class MainView {
 				gridPanel.Genetic();
 			}
 		});
-		treeButton.addActionListener(new ActionListener() {
+		moveGeneticTractor.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				gridPanel.clearGridView();
+				gridPanel.startGeneticTractor();
+			}
+		});
+		
+		generujTree.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				gridPanel.clearGridView();
+				gridPanel.generateTree();
+			}
+		});
+		moveTreeTractor.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
