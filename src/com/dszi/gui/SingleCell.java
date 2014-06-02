@@ -4,15 +4,16 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import com.dszi.firstorderlogic.Properties;
 
 import javax.swing.JPanel;
+
+import com.dszi.firstorderlogic.Properties;
+import com.dszi.logikaklauzul.LogicProperties;
 
 public class SingleCell extends JPanel {
 
 	private static final long serialVersionUID = 5121081628171676849L;
 	private Color defaultBackground;
-	Properties Props = new Properties();
 	
 	int irrigation, soilDestruction, numberOfPests;
 
@@ -25,7 +26,7 @@ public class SingleCell extends JPanel {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				defaultBackground = getBackground();
-				setBackground(Color.BLUE);
+				setBackground(new Color(100, 220, 100));
 			}
 			
 			@Override
@@ -41,13 +42,11 @@ public class SingleCell extends JPanel {
 						 "Liczba szkodników : " + getNumberOfPests() + " <br>";
 		
 		toolTip = toolTip + 
-				 "Czy wymaga podlania: " + Props.NeedsWatering(this) + "<br>" +
-				 "Czy wymaga nawo¿enia: " + Props.NeedsFertilising(this) + "<br>" +
-				 "Czy ma insekty: " + Props.SomePestsPresent(this) + "</html>" //+
-				 /*"DEV: Nawodnienie jako substring " + irrigation + " " +
-				 "DEV: Nawodnienie jako liczba " + Irrigation + " " +
-				 "DEV: U¿yŸnienie jako liczba " + soilDestruction + " " +
-				 "DEV: Insekty jako liczba " + numberofPests + " "*/;
+				 "Czy wymaga podlania: " + Properties.NeedsWatering(this) + "<br>" +
+				 "Czy wymaga nawo¿enia: " + Properties.NeedsFertilising(this) + "<br>" +
+				 "Czy ma insekty: " + Properties.SomePestsPresent(this) + "<br>" +
+				 "Czy mo¿e zostaæ wykluczona: " + LogicProperties.GeneticAlgorithmMayRefuseThisCell(this) + "<br>" +
+				 "Czy jest wykluczona/nie potrzebne naprawy: " + LogicProperties.TooGoodForGenetic(this) + "</html>";
 		
 		setToolTipText(toolTip);
 	}
@@ -77,7 +76,7 @@ public class SingleCell extends JPanel {
 	}
 
 	public void setTractorPositionHere() {
-		setBackground(Color.RED);
+		setBackground(new Color(150, 25, 100));
 	}
 
 	public void setTractorPositionNotHere() {
@@ -85,7 +84,7 @@ public class SingleCell extends JPanel {
 	}
 	
 	public void setTractorPositionWhenLeaving() {
-		setBackground(Color.BLUE);
+		setBackground(new Color(70, 25, 5));
 	}
 	
 	public void setClearCellHere() {
@@ -93,11 +92,11 @@ public class SingleCell extends JPanel {
 	}
 	
 	public void setAlgoritmPositionHere() {
-		setBackground(Color.GREEN);
+		setBackground(new Color(120, 165, 100));
 	}
 	
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension(50, 50);
+		return new Dimension(65, 65);
 	}
 }

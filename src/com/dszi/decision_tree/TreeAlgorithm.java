@@ -1,4 +1,4 @@
-package com.dszi.stateSpace;
+package com.dszi.decision_tree;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +9,7 @@ import com.dszi.support.Constants;
 import com.dszi.tractor.Tractor;
 import com.dszi.utils.Point;
 
-
-public class AAlgorithm {
+public class TreeAlgorithm {
 
 	Tractor tractor = new Tractor();
 	SingleCell cellPanel[][] = new SingleCell[Constants.gridSizeX][Constants.gridSizeY];
@@ -24,18 +23,10 @@ public class AAlgorithm {
 	int waterLevel;
 	int pesticideLevel;
 	int fertilizerLevel;
-	
-	public AAlgorithm(SingleCell[][] cellPanel) {
+
+	public TreeAlgorithm(SingleCell[][] cellPanel) {
 		this.cellPanel = cellPanel;
 
-		initializeTractor();
-		dfs(0, 0);
-	}
-	
-	public AAlgorithm(SingleCell[][] cellPanel, boolean[][] visited) {
-		this.cellPanel = cellPanel;
-		this.visited = visited;
-		
 		initializeTractor();
 		dfs(0, 0);
 	}
@@ -63,7 +54,7 @@ public class AAlgorithm {
 			if (!visited[x][y + 1]) {
 				newX = x;
 				newY = y + 1;
-				if(newIsBetter(oldX, oldY, newX, newY)) {
+				if(repairMostDamaged(oldX, oldY, newX, newY)) {
 					oldX = newX;
 					oldY = newY;
 				}
@@ -73,7 +64,7 @@ public class AAlgorithm {
 			if (!visited[x - 1][y]) {
 				newX = x - 1;
 				newY = y;
-				if(newIsBetter(oldX, oldY, newX, newY)) {
+				if(repairMostDamaged(oldX, oldY, newX, newY)) {
 					oldX = newX;
 					oldY = newY;
 				}
@@ -83,35 +74,51 @@ public class AAlgorithm {
 			if (!visited[x][y - 1]) {
 				newX = x;
 				newY = y - 1;
-				if(newIsBetter(oldX, oldY, newX, newY)) {
+				if(repairMostDamaged(oldX, oldY, newX, newY)) {
 					oldX = newX;
 					oldY = newY;
 				}
 			}
 		}
 		if(!visited[oldX][oldY])
+		{
 			dfs(oldX, oldY);
+		}
+		else {
+			dfs(oldX + 1, oldY - 1);
+		}
 	}
 
-	private boolean newIsBetter(int oldX, int oldY, int newX, int newY) {
-		int pointsForOld = 0;
-		int pointsForNew = 0;
-		if (Properties.IsinPerfectCondidion(cellPanel[oldX][oldY])) {
-			pointsForNew++;
+	private boolean repairMostDamaged(int oldX, int oldY, int newX, int newY) {
+		int chooseOld = 0;
+		int chooseNew = 0;
+
+		if (Properties.IsinPerfectCondidion(cellPanel[newX][newY])) {
+			chooseOld = 1;
 		}
-		if (cellPanel[oldX][oldY].getIrrigation() >= cellPanel[newX][newY].getIrrigation()) 
-			pointsForNew++;
-		else pointsForOld++;
-
-		if (cellPanel[oldX][oldY].getNumberOfPests() >= cellPanel[newX][newY].getNumberOfPests()) 
-			pointsForOld++;
-		else pointsForNew++;
-
-		if (cellPanel[oldX][oldY].getSoilDestruction() >= cellPanel[newX][newY].getSoilDestruction()) 
-			pointsForOld++;
-		else pointsForNew++;
-
-		if(pointsForOld >= pointsForNew) 
+		else {
+			if (Properties.IsDead(cellPanel[newX][newY])) {
+				chooseNew = 1;
+			} else {
+				if (cellPanel[oldX][oldY].getIrrigation() <= cellPanel[newX][newY].getIrrigation()) {
+					chooseOld = 1;
+				}
+				else {
+					if (cellPanel[oldX][oldY].getNumberOfPests() >= 2*(cellPanel[newX][newY].getNumberOfPests())) {
+						chooseOld = 1;
+					}
+					else {
+						if (cellPanel[oldX][oldY].getSoilDestruction() >= 2*(cellPanel[newX][newY].getSoilDestruction())) {
+							chooseOld = 1;
+						}
+						else { 
+							chooseNew = 1;
+						}
+					}
+				}
+			}
+		}
+		if(chooseOld >= chooseNew) 
 			return false;
 		else return true;
 	}
@@ -123,7 +130,7 @@ public class AAlgorithm {
 		pesticideLevel = pesticideLevel - cellPanel[x][y].getNumberOfPests();
 		fertilizerLevel = fertilizerLevel - cellPanel[x][y].getSoilDestruction();
 		visited[x][y] = true;
-		
+
 		pointsList.add(new Point(x, y));
 		
 		updateCell(x, y);

@@ -1,6 +1,5 @@
 package com.dszi.gui;
 
-
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,11 +24,6 @@ import com.dszi.tractor.Tractor;
 
 public class MainView {
 
-	/*
-	 * UWAGA
-	 * tutorial dla layoutu ktory zostal uzyty http://www.miglayout.com/QuickStart.pdf
-	 */
-
 	GridPanel gridPanel = new GridPanel();
 	static Tractor tractor = new Tractor();
 
@@ -41,9 +35,10 @@ public class MainView {
 	JLabel fertilizerLevelLabel = new JLabel("Poziom nawozu : ");
 	public static JLabel fertilizerLevel = new JLabel(Integer.toString(tractor.getFertilizerLevel()));
 
-	JButton generate = new JButton("Generuj");
 	JButton moveTractor = new JButton("Ruszaj");
-	JButton runTractor = new JButton("Uruchom traktor");
+	JButton genetic = new JButton("Selekcja");
+	JButton uruchomA = new JButton("Generuj A*");
+	JButton treeButton = new JButton("Generuj drzewo");
 
 	public MainView() {
 		EventQueue.invokeLater(new Runnable() {
@@ -51,7 +46,10 @@ public class MainView {
 			public void run() {
 				try {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+				} catch (ClassNotFoundException ex) {
+				} catch (InstantiationException e2) {
+				} catch ( IllegalAccessException e3) {
+				} catch ( UnsupportedLookAndFeelException e4) {
 				}
 				
 				initializeListeners();
@@ -92,8 +90,10 @@ public class MainView {
 				frame.add(fertilizerLevelLabel, "cell 0 3");
 				frame.add(fertilizerLevel, "cell 0 3");
 
-				frame.add(generate, "cell 0 4");
-				frame.add(moveTractor, "cell 0 5, wrap");
+				frame.add(genetic, "cell 0 5, wrap");
+				frame.add(uruchomA, "cell 0 6, wrap");
+				frame.add(treeButton, "cell 0 7, wrap");
+				frame.add(moveTractor, "cell 0 8, wrap");
 				frame.add(gridPanel, "east");
 				frame.pack();
 				frame.setLocationRelativeTo(null);
@@ -101,21 +101,39 @@ public class MainView {
 			}
 		});
 	}
+	
 
 	private void initializeListeners() {
-		generate.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				gridPanel.clearGridView();
-				gridPanel.initializeGeneratedData();
-			}
-		});
 		moveTractor.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				gridPanel.clearGridView();
 				gridPanel.startTractor();
+			}
+		});
+		uruchomA.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				gridPanel.clearGridView();
+				gridPanel.generateAAPath();
+			}
+		});
+		genetic.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				gridPanel.clearGridView();
+				gridPanel.Genetic();
+			}
+		});
+		treeButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				gridPanel.clearGridView();
+				gridPanel.startTreeTractor();
 			}
 		});
 	}

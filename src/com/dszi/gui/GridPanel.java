@@ -3,23 +3,31 @@ package com.dszi.gui;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
 
+import com.dszi.decision_tree.TreeAlgorithm;
+import com.dszi.geneticAlgorithm.geneticAlgorithm;
 import com.dszi.randomizer.RandomGroundGenerator;
 import com.dszi.stateSpace.AAlgorithm;
 import com.dszi.support.Constants;
+import com.dszi.tractor.TractorMovement;
+import com.dszi.utils.Point;
 
 @SuppressWarnings("serial")
 public class GridPanel extends JPanel {
 
 	SingleCell cellPanel[][] = new SingleCell[Constants.gridSizeX][Constants.gridSizeY];
+	List<Point> pointsList = new ArrayList<Point>();
 
 	public GridPanel() {
 		initializeGridView();
-		initializeTractorPosition();
 		initializeGeneratedData();
 	}
 
@@ -40,31 +48,56 @@ public class GridPanel extends JPanel {
 			}
 		}
 	}
-
+	
+	public void initializeGeneratedData() {
+		for (int i = 0; i < Constants.gridSizeX; i++) {
+			for (int j = 0; j < Constants.gridSizeY; j++) {
+				int genIrrigation = RandomGroundGenerator.generateIrrigation();
+				int genSoilDesctruction = RandomGroundGenerator.generateSoilDesctruction();
+				int genNumberOfPests = RandomGroundGenerator.generateNumberOfPests();
+				
+				cellPanel[i][j].setIrrigation(genIrrigation);
+				cellPanel[i][j].setSoilDestruction(genSoilDesctruction);
+				cellPanel[i][j].setNumberofPests(genNumberOfPests);
+				cellPanel[i][j].refreshGroundParameters();
+				
+				cellPanel[i][j].add(new JLabel("N : " + Integer.toString(genIrrigation))); // Nawodnienie
+				cellPanel[i][j].add(new JLabel("ZZ : " + Integer.toString(genSoilDesctruction))); // Zanieszczyszczenie ziemi
+				cellPanel[i][j].add(new JLabel("IS : " + Integer.toString(genNumberOfPests))); // Iloœæ szkodników
+			}
+		}
+	}
+	
 	public void clearGridView() {
 		for (int row = 0; row < Constants.gridSizeX; row++) 
 			for (int col = 0; col < Constants.gridSizeY; col++) 
 				cellPanel[row][col].setClearCellHere();
 	}
 
-	private void initializeTractorPosition() {
-		cellPanel[0][0].setTractorPositionHere();
-	}
-
-	public void initializeGeneratedData() {
-		for (int i = 0; i < Constants.gridSizeX; i++) {
-			for (int j = 0; j < Constants.gridSizeY; j++) {
-				cellPanel[i][j].setIrrigation(RandomGroundGenerator.generateIrrigation());
-				cellPanel[i][j].setSoilDestruction(RandomGroundGenerator.generateSoilDesctruction());
-				cellPanel[i][j].setNumberofPests(RandomGroundGenerator.generateNumberOfPests());
-				cellPanel[i][j].refreshGroundParameters();
-			}
-		}
-	}
-
 	public void startTractor() {
-		//		Timer timer = new Timer();
-		//		timer.schedule(new TractorMovement(cellPanel), 0, 100);
-		AAlgorithm dfs = new AAlgorithm(cellPanel);
+		Timer timer = new Timer();
+		timer.schedule(new TractorMovement(cellPanel, pointsList), 0, 150);
+	}
+	
+	public void generateAAPath() {
+		AAlgorithm aa = new AAlgorithm(cellPanel);
+		pointsList = aa.getPointsList();
+		
+		System.out.println("=========================");
+		System.out.println("WYGENEROWANO ŒCIE¯KÊ ZA POMOC¥ ALGORYTMU A*");
+		System.out.println("TRASA TRAKTORA JEST GOTOWA");
+	}
+
+	public void Genetic() {
+		geneticAlgorithm abc = new geneticAlgorithm(cellPanel);
+	}
+	
+	public void startTreeTractor() {
+		TreeAlgorithm tree = new TreeAlgorithm(cellPanel);
+		pointsList = tree.getPointsList();
+		
+		System.out.println("=========================");
+		System.out.println("WYGENEROWANO ŒCIE¯KÊ ZA POMOC¥ DRZEWA DECYZYJNEGO");
+		System.out.println("TRASA TRAKTORA JEST GOTOWA");
 	}
 }
