@@ -95,6 +95,20 @@ public class GridPanel extends JPanel {
 		AAlgorithm aa = new AAlgorithm(cellPanel);
 		aPointsList = aa.getPointsList();
 		
+		if(aa.getWaterLeftovers() < 0) {
+			Constants.tractorWaterLevel += 100;
+			Constants.tractorPesticideLevel -= 50;
+			Constants.tractorFertilizerLevel -= 50;
+		} else if (aa.getPesticidesLeftovers() < 0) {
+			Constants.tractorWaterLevel -= 50;
+			Constants.tractorPesticideLevel += 100;
+			Constants.tractorFertilizerLevel -= 50;
+		} else if (aa.getFertilizersLeftovers() < 0) {
+			Constants.tractorWaterLevel -= 50;
+			Constants.tractorPesticideLevel -= 50;
+			Constants.tractorFertilizerLevel += 100;
+		}
+		
 		System.out.println("=========================");
 		System.out.println("WYGENEROWANO �CIE�K� ZA POMOC� ALGORYTMU A*");
 		System.out.println("TRASA TRAKTORA JEST GOTOWA");

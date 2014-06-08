@@ -17,8 +17,10 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
  */
 
+
 import net.miginfocom.swing.MigLayout;
 
+import com.dszi.support.Constants;
 import com.dszi.tractor.Tractor;
 
 
@@ -106,7 +108,6 @@ public class MainView {
 		});
 	}
 	
-
 	private void initializeListeners() {
 		generujA.addActionListener(new ActionListener() {
 
@@ -122,6 +123,9 @@ public class MainView {
 			public void actionPerformed(ActionEvent arg0) {
 				gridPanel.clearGridView();
 				gridPanel.startATractor();
+				waterLevel.setText(Integer.toString(Constants.tractorWaterLevel));
+				pesticideLevel.setText(Integer.toString(Constants.tractorPesticideLevel));
+				fertilizerLevel.setText(Integer.toString(Constants.tractorFertilizerLevel));
 			}
 		});
 		
