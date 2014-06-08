@@ -3,7 +3,6 @@ package com.dszi.decision_tree;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dszi.firstorderlogic.Properties;
 import com.dszi.gui.SingleCell;
 import com.dszi.support.Constants;
 import com.dszi.tractor.Tractor;
@@ -84,40 +83,58 @@ public class TreeAlgorithm {
 		{
 			dfs(oldX, oldY);
 		}
-		else {
-			dfs(oldX + 1, oldY - 1);
-		}
 	}
 
+	int Failure =0;
+	
 	private boolean repairMostDamaged(int oldX, int oldY, int newX, int newY) {
 		int chooseOld = 0;
 		int chooseNew = 0;
 
-		if (Properties.IsinPerfectCondidion(cellPanel[newX][newY])) {
-			chooseOld = 1;
+		if (cellPanel[newX][newY].getIrrigation()<20){
+			chooseNew = 10;
+			
+			if (cellPanel[newX][newY].getIrrigation()>cellPanel[oldX][oldY].getIrrigation()){
+				Failure++;
+				if (Failure >= 5)
+				{
+					chooseOld = 20;
+					System.out.println("Zmieniam decyzje");
+				}
+			}
 		}
-		else {
-			if (Properties.IsDead(cellPanel[newX][newY])) {
-				chooseNew = 1;
-			} else {
-				if (cellPanel[oldX][oldY].getIrrigation() <= cellPanel[newX][newY].getIrrigation()) {
-					chooseOld = 1;
+			else {
+				if (cellPanel[newX][newY].getSoilDestruction()>=70){
+				chooseNew = 10;
+				
+				if (cellPanel[newX][newY].getSoilDestruction()<cellPanel[oldX][oldY].getSoilDestruction()){
+					Failure++;
+					if (Failure >= 5)
+					{
+						chooseOld = 20;
+						System.out.println("Zmieniam decyzje");
+					}
+				}
+				
 				}
 				else {
-					if (cellPanel[oldX][oldY].getNumberOfPests() >= 2*(cellPanel[newX][newY].getNumberOfPests())) {
-						chooseOld = 1;
-					}
-					else {
-						if (cellPanel[oldX][oldY].getSoilDestruction() >= 2*(cellPanel[newX][newY].getSoilDestruction())) {
-							chooseOld = 1;
-						}
-						else { 
-							chooseNew = 1;
+					if (cellPanel[newX][newY].getNumberOfPests()>10){
+						chooseNew = 10;
+						
+						if (cellPanel[newX][newY].getNumberOfPests()<cellPanel[oldX][oldY].getNumberOfPests()){
+							Failure++;
+							if (Failure >= 5)
+							{
+								chooseOld = 20;
+								System.out.println("Zmieniam decyzje");
+							}
 						}
 					}
 				}
 			}
-		}
+		
+		
+		
 		if(chooseOld >= chooseNew) 
 			return false;
 		else return true;
@@ -166,6 +183,7 @@ public class TreeAlgorithm {
 		System.out.println("Woda " + waterLevel);
 		System.out.println("Pestycydy " + pesticideLevel);
 		System.out.println("Nawóz " + fertilizerLevel);
+		System.out.println("Porazki " + Failure);
 	}
 
 	private boolean isNotOutOfBounds(int x, int y) {
