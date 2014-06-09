@@ -14,7 +14,6 @@ import javax.swing.border.MatteBorder;
 
 import com.dszi.decision_tree.TreeAlgorithm;
 import com.dszi.geneticAlgorithm.geneticAlgorithm;
-import com.dszi.neuro.NeuroAlgorithm;
 import com.dszi.randomizer.RandomGroundGenerator;
 import com.dszi.stateSpace.AAlgorithm;
 import com.dszi.support.Constants;
@@ -28,7 +27,6 @@ public class GridPanel extends JPanel {
 	List<Point> aPointsList = new ArrayList<Point>();
 	List<Point> treePointsList = new ArrayList<Point>();
 	List<Point> geneticPointsList = new ArrayList<Point>();
-	List<Point> neuroPointsList = new ArrayList<Point>();
 
 	public GridPanel() {
 		initializeGridView();
@@ -72,48 +70,10 @@ public class GridPanel extends JPanel {
 		}
 	}
 	
-	public void refresh() {
-		for (int i = 0; i < Constants.gridSizeX; i++) {
-			for (int j = 0; j < Constants.gridSizeY; j++) {
-				if(
-				cellPanel[i][j].getIrrigation()==100 &&
-				cellPanel[i][j].getSoilDestruction()==0 &&
-				cellPanel[i][j].getNumberOfPests()==0
-				) {
-				
-				cellPanel[i][j].removeAll();
-				cellPanel[i][j].repaint();
-					
-				cellPanel[i][j].setBackground(new Color(255,255,0));
-				
-				cellPanel[i][j].add(new JLabel("N : " + Integer.toString(cellPanel[i][j].getIrrigation()))); // Nawodnienie
-				cellPanel[i][j].add(new JLabel("ZZ : " + Integer.toString(cellPanel[i][j].getSoilDestruction()))); // Zanieszczyszczenie ziemi
-				cellPanel[i][j].add(new JLabel("IS : " + Integer.toString(cellPanel[i][j].getNumberOfPests()))); // Iloœæ szkodników
-			
-				cellPanel[i][j].validate();
-				}
-				else {
-				
-				cellPanel[i][j].removeAll();
-				cellPanel[i][j].repaint();
-					
-				cellPanel[i][j].add(new JLabel("N : " + Integer.toString(cellPanel[i][j].getIrrigation()))); // Nawodnienie
-				cellPanel[i][j].add(new JLabel("ZZ : " + Integer.toString(cellPanel[i][j].getSoilDestruction()))); // Zanieszczyszczenie ziemi
-				cellPanel[i][j].add(new JLabel("IS : " + Integer.toString(cellPanel[i][j].getNumberOfPests()))); // Iloœæ szkodników
-			
-				cellPanel[i][j].validate();	
-				}
-			}
-		}
-		
-	}
-	
 	public void clearGridView() {
 		for (int row = 0; row < Constants.gridSizeX; row++) 
-			for (int col = 0; col < Constants.gridSizeY; col++) {
+			for (int col = 0; col < Constants.gridSizeY; col++) 
 				cellPanel[row][col].setClearCellHere();
-				cellPanel[row][col].validate();
-			}
 	}
 
 	public void startATractor() {
@@ -131,28 +91,9 @@ public class GridPanel extends JPanel {
 		timer.schedule(new TractorMovement(cellPanel, geneticPointsList), 0, 150);
 	}
 	
-	public void startNeuroTractor() {
-		Timer timer = new Timer();
-		timer.schedule(new TractorMovement(cellPanel, neuroPointsList), 0, 150);
-	}
-	
 	public void generateAAPath() {
 		AAlgorithm aa = new AAlgorithm(cellPanel);
 		aPointsList = aa.getPointsList();
-		
-		if(aa.getWaterLeftovers() < 0) {
-			Constants.tractorWaterLevel += 100;
-			Constants.tractorPesticideLevel -= 50;
-			Constants.tractorFertilizerLevel -= 50;
-		} else if (aa.getPesticidesLeftovers() < 0) {
-			Constants.tractorWaterLevel -= 50;
-			Constants.tractorPesticideLevel += 100;
-			Constants.tractorFertilizerLevel -= 50;
-		} else if (aa.getFertilizersLeftovers() < 0) {
-			Constants.tractorWaterLevel -= 50;
-			Constants.tractorPesticideLevel -= 50;
-			Constants.tractorFertilizerLevel += 100;
-		}
 		
 		System.out.println("=========================");
 		System.out.println("WYGENEROWANO ŒCIE¯KÊ ZA POMOC¥ ALGORYTMU A*");
@@ -161,13 +102,6 @@ public class GridPanel extends JPanel {
 
 	public void Genetic() {
 		geneticAlgorithm abc = new geneticAlgorithm(cellPanel);
-		geneticPointsList = abc.getPointsList();
-
-		System.out.println("=========================");
-		System.out.println("WYGENEROWANO ŒCIE¯KÊ ZA POMOC¥ ALGORYTMU A*");
-		System.out.println("TRASA TRAKTORA JEST GOTOWA");
-
-
 	}
 	
 	public void generateTree() {
@@ -176,15 +110,6 @@ public class GridPanel extends JPanel {
 		
 		System.out.println("=========================");
 		System.out.println("WYGENEROWANO ŒCIE¯KÊ ZA POMOC¥ DRZEWA DECYZYJNEGO");
-		System.out.println("TRASA TRAKTORA JEST GOTOWA");
-	}
-	
-	public void generateNeuro() {
-		NeuroAlgorithm Neuro = new NeuroAlgorithm(cellPanel);
-		neuroPointsList = Neuro.getPointsList();
-		
-		System.out.println("=========================");
-		System.out.println("WYGENEROWANO ŒCIE¯KÊ ZA POMOC¥ METODY GRADIENTU");
 		System.out.println("TRASA TRAKTORA JEST GOTOWA");
 	}
 }

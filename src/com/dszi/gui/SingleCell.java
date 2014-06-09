@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.dszi.firstorderlogic.Properties;
@@ -50,8 +49,6 @@ public class SingleCell extends JPanel {
 				 "Czy jest wykluczona/nie potrzebne naprawy: " + LogicProperties.TooGoodForGenetic(this) + "</html>";
 		
 		setToolTipText(toolTip);
-		
-		
 	}
 	
 	public int getIrrigation() {
@@ -87,38 +84,11 @@ public class SingleCell extends JPanel {
 	}
 	
 	public void setTractorPositionWhenLeaving() {
-		if( getIrrigation()==100 &&
-			getSoilDestruction()==0 &&
-			getNumberOfPests()==0
-		  ) {
-			removeAll();
-			repaint();
-					
-			setBackground(new Color(255,255,0));
-				
-			add(new JLabel("N : " + Integer.toString(getIrrigation()))); // Nawodnienie
-			add(new JLabel("ZZ : " + Integer.toString(getSoilDestruction()))); // Zanieszczyszczenie ziemi
-			add(new JLabel("IS : " + Integer.toString(getNumberOfPests()))); // Iloœæ szkodników
-			
-			validate();
-			}
-		   else {
-			removeAll();
-			repaint();
-			
-			setBackground(new Color(70,25,5));
-			
-			add(new JLabel("N : " + Integer.toString(getIrrigation()))); // Nawodnienie
-			add(new JLabel("ZZ : " + Integer.toString(getSoilDestruction()))); // Zanieszczyszczenie ziemi
-			add(new JLabel("IS : " + Integer.toString(getNumberOfPests()))); // Iloœæ szkodników
-			
-			validate();	
-			}
+		setBackground(new Color(70, 25, 5));
 	}
 	
 	public void setClearCellHere() {
 		setBackground(defaultBackground);
-		validate();
 	}
 	
 	public void setAlgoritmPositionHere() {
