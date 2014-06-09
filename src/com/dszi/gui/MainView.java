@@ -9,14 +9,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-/*
-Neuro dev
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
- */
-
 
 import net.miginfocom.swing.MigLayout;
 
@@ -43,6 +35,9 @@ public class MainView {
 	JButton moveATractor = new JButton("Go");
 	JButton generujTree = new JButton("Generuj drzewo");
 	JButton moveTreeTractor = new JButton("Go");
+	JButton generujNeuro = new JButton("Generuj neuro");
+	JButton moveNeuroTractor = new JButton("Go");
+	JButton refresh = new JButton("Odswiez");
 
 	public MainView() {
 		EventQueue.invokeLater(new Runnable() {
@@ -57,30 +52,6 @@ public class MainView {
 				}
 				
 				initializeListeners();
-
-				/*
-				JTextField field3 = new JTextField("Neuron MCP");
-				field3.setEditable(false);
-
-				TableModel dataModel = new AbstractTableModel() {
-					  public int getColumnCount() { return 12; }
-			          public int getRowCount() { return 12;}
-			          public Object getValueAt(int row, int col) { return new Double(col+row); }
-			      };
-			    JTable table = new JTable(dataModel);
-			    JScrollPane scrollpane = new JScrollPane(table);
-				 */ //Neuro dev
-				//JFrame frame2 = new JFrame("Neuro DEV");
-				/*
-				frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame2.setLayout(new MigLayout());
-				frame2.add(field3, "width 100:250:300, cell 0 0");
-				frame2.add(table, "cell 0 1");
-				frame2.pack();
-				frame2.setLocationRelativeTo(null);
-				frame2.setVisible(false);
-				 */ //Neuro dev
-				
 				
 				JFrame frame = new JFrame("iTractor");
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -100,6 +71,9 @@ public class MainView {
 				frame.add(moveATractor, "cell 1 6, wrap");
 				frame.add(generujTree, "cell 0 7, wrap");
 				frame.add(moveTreeTractor, "cell 1 7, wrap");
+				frame.add(generujNeuro, "cell 0 8, wrap");
+				frame.add(moveNeuroTractor, "cell 1 8, wrap");
+				frame.add(refresh, "cell 0 9, wrap");
 				frame.add(gridPanel, "east");
 				frame.pack();
 				frame.setLocationRelativeTo(null);
@@ -108,6 +82,7 @@ public class MainView {
 		});
 	}
 	
+
 	private void initializeListeners() {
 		generujA.addActionListener(new ActionListener() {
 
@@ -154,12 +129,38 @@ public class MainView {
 				gridPanel.generateTree();
 			}
 		});
+		
+		generujNeuro.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				//gridPanel.clearGridView();
+				gridPanel.generateNeuro();
+			}
+		});
+		
 		moveTreeTractor.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				gridPanel.clearGridView();
 				gridPanel.startTreeTractor();
+			}
+		});
+		moveNeuroTractor.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				//gridPanel.clearGridView();
+				gridPanel.startNeuroTractor();
+			}
+		});
+		refresh.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				gridPanel.clearGridView();
+				gridPanel.refresh();
 			}
 		});
 	}
