@@ -27,7 +27,7 @@ public class TreeAlgorithm {
 		this.cellPanel = cellPanel;
 
 		initializeTractor();
-		dfs(0, 0);
+		dfs(5, 5);
 	}
 
 	public void dfs(int x, int y) {

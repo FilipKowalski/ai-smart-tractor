@@ -29,7 +29,7 @@ public class AAlgorithm {
 		this.cellPanel = cellPanel;
 
 		initializeTractor();
-		dfs(0, 0);
+		dfs(5, 5);
 	}
 	
 	public AAlgorithm(SingleCell[][] cellPanel, boolean[][] visited) {
@@ -37,7 +37,7 @@ public class AAlgorithm {
 		this.visited = visited;
 		
 		initializeTractor();
-		dfs(0, 0);
+		dfs(5, 5);
 	}
 
 	public void dfs(int x, int y) {
