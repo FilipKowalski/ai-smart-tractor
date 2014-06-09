@@ -24,6 +24,7 @@ public class AAlgorithm {
 	int waterLevel;
 	int pesticideLevel;
 	int fertilizerLevel;
+	int solutionWeight;
 	
 	public AAlgorithm(SingleCell[][] cellPanel) {
 		this.cellPanel = cellPanel;
@@ -169,5 +170,19 @@ public class AAlgorithm {
 	
 	public List<Point> getPointsList() {
 		return pointsList;
+	}
+	
+	public int getWaterLeftovers() {
+		return waterLevel;
+	}
+	
+	public int getPesticidesLeftovers() {
+		return pesticideLevel;
+		
+	}
+	
+	public int getFertilizersLeftovers() {
+		return fertilizerLevel;
+		
 	}
 }

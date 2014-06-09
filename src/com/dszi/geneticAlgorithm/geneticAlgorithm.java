@@ -1,9 +1,12 @@
 package com.dszi.geneticAlgorithm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.dszi.gui.SingleCell;
 import com.dszi.stateSpace.AAlgorithm;
 import com.dszi.support.Constants;
-
+import com.dszi.utils.Point;
 
 
 public class geneticAlgorithm {
@@ -11,6 +14,7 @@ public class geneticAlgorithm {
 	SingleCell cellPanel[][] = new SingleCell[Constants.gridSizeX][Constants.gridSizeY];
 	//SingleCell cellPanel2[][] = new SingleCell[Constants.gridSizeX][Constants.gridSizeY];
 	boolean[][] visited = new boolean[Constants.gridSizeX + 1][Constants.gridSizeY + 1];
+	List<Point> pointsList = new ArrayList<Point>();
 	
 	int positionX;
 	int positionY;
@@ -98,6 +102,13 @@ public class geneticAlgorithm {
 	
 	public void runGenetic() {
 		AAlgorithm dfs = new AAlgorithm(cellPanel, visited);
+		pointsList = dfs.getPointsList();
 	}
+	
+	public List<Point> getPointsList() {
+			return pointsList;
+	}
+
+
 		
 }
