@@ -65,7 +65,7 @@ public class GridPanel extends JPanel {
 				
 				cellPanel[i][j].add(new JLabel("N : " + Integer.toString(genIrrigation))); // Nawodnienie
 				cellPanel[i][j].add(new JLabel("ZZ : " + Integer.toString(genSoilDesctruction))); // Zanieszczyszczenie ziemi
-				cellPanel[i][j].add(new JLabel("IS : " + Integer.toString(genNumberOfPests))); // Iloœæ szkodników
+				cellPanel[i][j].add(new JLabel("IS : " + Integer.toString(genNumberOfPests))); // Iloï¿½ï¿½ szkodnikï¿½w
 			}
 		}
 	}
@@ -95,13 +95,32 @@ public class GridPanel extends JPanel {
 		AAlgorithm aa = new AAlgorithm(cellPanel);
 		aPointsList = aa.getPointsList();
 		
+		if(aa.getWaterLeftovers() < 0) {
+			Constants.tractorWaterLevel += 100;
+			Constants.tractorPesticideLevel -= 50;
+			Constants.tractorFertilizerLevel -= 50;
+		} else if (aa.getPesticidesLeftovers() < 0) {
+			Constants.tractorWaterLevel -= 50;
+			Constants.tractorPesticideLevel += 100;
+			Constants.tractorFertilizerLevel -= 50;
+		} else if (aa.getFertilizersLeftovers() < 0) {
+			Constants.tractorWaterLevel -= 50;
+			Constants.tractorPesticideLevel -= 50;
+			Constants.tractorFertilizerLevel += 100;
+		}
+		
 		System.out.println("=========================");
-		System.out.println("WYGENEROWANO ŒCIE¯KÊ ZA POMOC¥ ALGORYTMU A*");
+		System.out.println("WYGENEROWANO ï¿½CIEï¿½Kï¿½ ZA POMOCï¿½ ALGORYTMU A*");
 		System.out.println("TRASA TRAKTORA JEST GOTOWA");
 	}
 
 	public void Genetic() {
 		geneticAlgorithm abc = new geneticAlgorithm(cellPanel);
+		geneticPointsList = abc.getPointsList();
+		
+		System.out.println("=========================");
+		System.out.println("WYGENEROWANO ï¿½CIEï¿½Kï¿½ ZA POMOCï¿½ ALGORYTMU A*");
+		System.out.println("TRASA TRAKTORA JEST GOTOWA");
 	}
 	
 	public void generateTree() {
@@ -109,7 +128,7 @@ public class GridPanel extends JPanel {
 		treePointsList = tree.getPointsList();
 		
 		System.out.println("=========================");
-		System.out.println("WYGENEROWANO ŒCIE¯KÊ ZA POMOC¥ DRZEWA DECYZYJNEGO");
+		System.out.println("WYGENEROWANO ï¿½CIEï¿½Kï¿½ ZA POMOCï¿½ DRZEWA DECYZYJNEGO");
 		System.out.println("TRASA TRAKTORA JEST GOTOWA");
 	}
 }

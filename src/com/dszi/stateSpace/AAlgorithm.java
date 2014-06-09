@@ -170,4 +170,18 @@ public class AAlgorithm {
 	public List<Point> getPointsList() {
 		return pointsList;
 	}
+	
+	public int getWaterLeftovers() {
+		return waterLevel;
+	}
+	
+	public int getPesticidesLeftovers() {
+		return pesticideLevel;
+		
+	}
+	
+	public int getFertilizersLeftovers() {
+		return fertilizerLevel;
+		
+	}
 }
