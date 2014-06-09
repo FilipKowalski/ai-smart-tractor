@@ -7,7 +7,9 @@ import com.dszi.gui.SingleCell;
 import com.dszi.support.Constants;
 import com.dszi.tractor.Tractor;
 import com.dszi.utils.Point;
+import com.dszi.utils.RandomUtils;
 import com.dszi.neuro.GradientMethod;
+import com.dszi.neuro.AssociationModel;
 
 
 public class NeuroAlgorithm {
@@ -16,8 +18,11 @@ public class NeuroAlgorithm {
 	SingleCell cellPanel[][] = new SingleCell[Constants.gridSizeX][Constants.gridSizeY];
 	List<Point> pointsList = new ArrayList<Point>();
 	GradientMethod GM = new GradientMethod();
+	AssociationModel AM = new AssociationModel();
 
-	boolean[][] visited = new boolean[Constants.gridSizeX][Constants.gridSizeY]; 
+	boolean[][] visited = new boolean[Constants.gridSizeX][Constants.gridSizeY];
+	
+	
 	boolean shortage_flag=false, stop_flag=false;
 
 	int positionX = 0;
@@ -63,7 +68,8 @@ public class NeuroAlgorithm {
 		int current_x = positionX, current_y = positionY, target_x, target_y;
 		Point TargetPoint;
 		
-		TargetPoint = GM.GradientMethodOutput(positionX,positionY,cellpanel);
+		TargetPoint = GM.GradientMethodOutput(positionX,positionY,cellpanel, visited);
+		
 		target_x = TargetPoint.getX();
 		target_y = TargetPoint.getY();
 		
@@ -83,14 +89,12 @@ public class NeuroAlgorithm {
 		
 		calculateTractorResources(current_x,current_y);
 		
-		//pointsList.add(GM.GradientMethodOutput(positionX,positionY,cellpanel));
-		
 	}
 
 	private void continuewithoutCalculations(int x, int y) {
 		positionX = x;
 		positionY = y;
-		visited[x][y] = true;
+		//visited[x][y] = true;
 		
 		pointsList.add(new Point(x, y));
 	}
@@ -116,7 +120,101 @@ public class NeuroAlgorithm {
 		if((waterLevel - cellPanel[x][y].getIrrigation())<0 ||
 		   (pesticideLevel - cellPanel[x][y].getNumberOfPests())<0 ||	
 		   (fertilizerLevel - cellPanel[x][y].getSoilDestruction())<0
-		  ) { shortage_flag=true; };
+		  ) { 
+			double[] proposedComponent = new double[201]; //from current waterLevel-100 to current waterLevel+100
+			double[] idealComponent = new double[201]; //same here
+			
+			for(int i=0; i<201; i++) {
+				if(RandomUtils.getRandomNumber()<=50) proposedComponent[i] = -1;
+				else proposedComponent[i] = 1;
+			}
+			
+			//Water's ideal component calculations:
+			int position = 0, match = waterLevel - cellPanel[x][y].getIrrigation();
+			System.out.println(match);
+			if(match<0 && match>-102) {
+				match = -1*match; //how much we lacked to water the last tile.
+				position = 101+match;
+				
+				idealComponent[position] = 1;
+				for(int i=0; i<201; i++) {
+					if(i!=position) idealComponent[i] = -1;
+				}
+				double[] WaterUpgrade = AM.AssocMod(idealComponent, proposedComponent);
+				
+				Constants.tractorWaterLevel += match;
+			}
+			if(match>=0 && match<102) {
+				match = -1*match; //how much spare water we had.
+				position = 101+match;
+				
+				idealComponent[position] = 1;
+				for(int i=0; i<201; i++) {
+					if(i!=position) idealComponent[i] = -1;
+				}
+				double[] WaterUpgrade = AM.AssocMod(idealComponent, proposedComponent);
+				
+				Constants.tractorWaterLevel -= match;
+			}
+			
+			//Fertiliser's ideal component calculations:
+			
+			match = fertilizerLevel - cellPanel[x][y].getSoilDestruction();
+			if(match<0 && match>-102) {
+				match = -1*match; //how much we lacked to fertilise the last tile.
+				position = 101+match;
+				
+				idealComponent[position] = 1;
+				for(int i=0; i<201; i++) {
+					if(i!=position) idealComponent[i] = -1;
+				}
+				double[] FertiliserUpgrade = AM.AssocMod(idealComponent, proposedComponent);
+				
+				Constants.tractorFertilizerLevel += match;
+			}
+			
+			if(match>=0 && match<102) {
+				match = -1*match; //how much spare fertiliser we had.
+				position = 101+match;
+				
+				idealComponent[position] = 1;
+				for(int i=0; i<201; i++) {
+					if(i!=position) idealComponent[i] = -1;
+				}
+				double[] FertiliserUpgrade = AM.AssocMod(idealComponent, proposedComponent);
+				
+				Constants.tractorFertilizerLevel -= match;
+			}
+			
+			//Pesticide's ideal component calculations:
+			
+			match = pesticideLevel - cellPanel[x][y].getNumberOfPests();
+			if(match<0 && match>-102) {
+				match = -1*match; //how much we lacked to water the last tile.
+				position = 101+match;
+				
+				idealComponent[position] = 1;
+				for(int i=0; i<201; i++) {
+					if(i!=position) idealComponent[i] = -1;
+				}
+				double[] PesticideUpgrade = AM.AssocMod(idealComponent, proposedComponent);
+				
+				Constants.tractorPesticideLevel += match;
+			}
+			if(match>=0 && match<102) {
+				match = -1*match; //how much spare water we had.
+				position = 101+match;
+				
+				idealComponent[position] = 1;
+				for(int i=0; i<201; i++) {
+					if(i!=position) idealComponent[i] = -1;
+				}
+				double[] PesticideUpgrade = AM.AssocMod(idealComponent, proposedComponent);
+				
+				Constants.tractorPesticideLevel -= match;
+			}
+			
+			shortage_flag=true; };
 	}
 
 	private void updateCell(int x, int y) {

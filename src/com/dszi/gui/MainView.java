@@ -153,6 +153,9 @@ public class MainView {
 			public void actionPerformed(ActionEvent arg0) {
 				//gridPanel.clearGridView();
 				gridPanel.startNeuroTractor();
+				waterLevel.setText(Integer.toString(Constants.tractorWaterLevel));
+				pesticideLevel.setText(Integer.toString(Constants.tractorPesticideLevel));
+				fertilizerLevel.setText(Integer.toString(Constants.tractorFertilizerLevel));
 			}
 		});
 		refresh.addActionListener(new ActionListener() {

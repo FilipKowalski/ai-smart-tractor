@@ -71,7 +71,7 @@ public class GradientMethod {
 			return result;
 		}
 		
-		public Point GradientMethodOutput(int tractor_x, int tractor_y, SingleCell CellPanel[][])
+		public Point GradientMethodOutput(int tractor_x, int tractor_y, SingleCell CellPanel[][], boolean[][] visited)
 		{
 			Point result = new Point();
 			int x, y, x_max = 0, y_max = 0;
@@ -96,10 +96,10 @@ public class GradientMethod {
 							CellPanel[x][y].getIrrigation(),
 							CellPanel[x][y].getSoilDestruction(),
 							CellPanel[x][y].getNumberOfPests()});
-					
 					if(CellPanel[x][y].getIrrigation()==100 &&
 					   CellPanel[x][y].getSoilDestruction()==0 &&
-					   CellPanel[x][y].getNumberOfPests()==0) value[x][y]=-1000000.0;
+					   CellPanel[x][y].getNumberOfPests()==0 &&
+					   visited[x][y]==true) value[x][y]=-1000000.0;
 				}
 			}
 		
